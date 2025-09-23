@@ -40,13 +40,13 @@ pipeline{
                }
            }	
           }
-          # stage('MetricCheck'){
+          // stage('MetricCheck'){
               
-            #  steps{
-             #     sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-             # }
+            //  steps{
+             //     sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+             // }
               
-         # }
+         // }
           stage('Package'){
 		  
               steps{
