@@ -1,10 +1,9 @@
 FROM tomcat:9-jdk11
 
-# Remove default webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy WAR file from target/ folder
-COPY target/addressbook.war /usr/local/tomcat/webapps/*.war
+# Copy WAR with same name
+COPY target/addressbook.war /usr/local/tomcat/webapps/addressbook.war
 
 EXPOSE 8080
 
