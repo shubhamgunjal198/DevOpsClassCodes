@@ -1,14 +1,12 @@
-# Use official Tomcat image as base
-FROM tomcat:9.0-jdk11
+FROM tomcat:9-jdk11
 
-# Remove default ROOT app
+# Remove default webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy WAR file to Tomcat webapps
+# Copy WAR from target folder
 COPY target/addressbook.war /usr/local/tomcat/webapps/ROOT.war
 
-# Expose Tomcat port
+# Expose port
 EXPOSE 8080
 
-# Start Tomcat
 CMD ["catalina.sh", "run"]
