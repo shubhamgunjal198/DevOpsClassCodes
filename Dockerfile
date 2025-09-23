@@ -5,7 +5,7 @@ FROM tomcat:9.0-jdk11
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy WAR file to Tomcat webapps
-COPY addressbook.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/addressbook.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expose Tomcat port
 EXPOSE 8080
