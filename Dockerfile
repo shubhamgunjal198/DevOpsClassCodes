@@ -4,7 +4,7 @@ FROM tomcat:9-jdk11
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy WAR file from target/ folder
-COPY target/addressbook.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/addressbook.war /usr/local/tomcat/webapps/*.war
 
 EXPOSE 8080
 
