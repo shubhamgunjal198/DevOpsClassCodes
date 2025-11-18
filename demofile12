@@ -1,1 +1,55 @@
-demofile
+pipeline{
+    agent any 
+    tools{
+        maven 'mymaven'
+    }
+    stages{
+        stage('git clone'){
+            git 'https://github.com/shubhamgunjal198/DevOpsClassCodes.git'
+        }
+    }
+    stage('compile'){
+        steps{
+            sh 'mvn compile'
+        }
+    }
+    stage('review'){
+        steps{
+            sh 'mvn pmd:pmd'
+        }
+        post{
+            success{
+        recordIssues sourceCodeRetention: 'LAST_BUILD', tools: [pmdParser(pattern: '**/pmd.xml')]
+            }
+        }
+    }
+    stage('test'){
+        steps{
+            sh 'mvn test'
+        }
+    }
+    stage('deploy to tomcat'){
+        steps{
+            deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://100.27.199.27:9090/')], contextPath: null, war: '**/*.war'
+        }
+    }
+    stage('sonar-scan'){
+        environment{
+            scannerHome = tool 'sonartool'
+        }
+        steps{
+            withSonarQubeEnv('mysonar'){
+                sh '''${scannerHome}/bin/sonar-scanner \
+                -Dsonar.projectKey=demo-sonar1_new \
+                -Dsonar.java.binaries=target/classes \
+                -Dsonar.organization=demo-sonar1
+                '''
+            }
+        }
+        post{
+            success{
+                emailext body: 'build success', subject: 'sonar scanner', to: 'shubhamgunjal199@gmail.com'
+            }
+        }
+    }
+}
