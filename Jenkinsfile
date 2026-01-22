@@ -5,7 +5,7 @@ pipeline{
         maven 'mymaven'
     }
 	agent{
-		label 'linux_node
+		label 'linux1'
 	}
       stages{
            stage('Checkout'){
